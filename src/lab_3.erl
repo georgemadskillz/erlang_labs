@@ -7,6 +7,7 @@
 -export([sum/1, sum/2]).
 -export([create/1, reverse_create/1]).
 -export([write/1]).
+%-export([filter/2, reverse/1, concatenate/1, flatten/1]).
 -export([filter/2, reverse/1, concatenate/1]).
 
 even(Int) when Int rem 2 == 0 -> true;
@@ -115,9 +116,19 @@ concatTwoAux([], Concatenated) ->
 concatTwoAux([Head | Tail], Concatenated) ->
     concatTwoAux(Tail, [Head | Concatenated]). 
     
-
-
 %flatten
+% ([[1,[2,[3],[]]], [[[4]]], [5,6]]) => [1,2,3,4,5,6].
+
+% [1,[2,[3],[]],[[4]],5,6]
+% [1,2,[3],[],[4],5,6]
+% [1,2,3,4,5,6]
+%flatten(NestedList) ->
+%    flattenAux(
+
+%flattenAux(
+
+
+
 
 
 
