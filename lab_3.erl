@@ -7,8 +7,13 @@
 -export([sum/1, sum/2]).
 -export([create/1, reverse_create/1]).
 -export([write/1]).
-%-export([filter/2, reverse/1, concatenate/1, flatten/1]).
--export([filter/2, reverse/1, concatenate/1]).
+-export([filter/2, reverse/1, concatenate/1, flatten/1]).
+-export([test/1]).
+
+-export([quick_sort/1,merge_sort/1]).
+
+% Tests
+-export([testFlatten/0]).
 
 even(Int) when Int rem 2 == 0 -> true;
 even(Int) when Int rem 2 == 1 -> false.
@@ -86,7 +91,7 @@ filterAux(Result, [Head | Tail], Max) ->
         true ->
             filterAux(Result, Tail, Max)   
     end.
-
+%ex3-5 manipulating lists
 %reverse
 reverse(List) ->
     reverseAux([], List).
@@ -122,13 +127,60 @@ concatTwoAux([Head | Tail], Concatenated) ->
 % [1,[2,[3],[]],[[4]],5,6]
 % [1,2,[3],[],[4],5,6]
 % [1,2,3,4,5,6]
-%flatten(NestedList) ->
-%    flattenAux(
 
-%flattenAux(
+flatten([])     -> 
+    [];
+flatten([H|T]) when is_list(H)  ->
+   flatten( flatten(H) ++ T);
+flatten([H|T])  ->
+    [H | flatten(T)].
 
+testFlatten() ->
+    io:fwrite("Start test..~n"),
+    Test = [{1,abc,lalala},[1,[2,[3],[]]], [[[4]]], [5,6],[],[],[],[[[[[]]]]]],
+    %Test = [1,2,3],
+    io:fwrite("input: ~p~n", [Test]),
+    Result = flatten(Test),
+    io:fwrite("flatten result: ~p~n", [Result]),
+    testFlatten_ok.
+   
+test([Var]) -> [Var].
 
+%ex3-6 sorting lists
+%quicksort
+quick_sort([]) ->
+    [];
+quick_sort([H|T]) ->
+    Left = quick_sort(qs_check(left,H,T,[])),
+    Right = quick_sort(qs_check(right,H,T,[])),
+    flatten([[Left] ++ [H] ++ [Right]]).
 
+qs_check(left, _, [], Acc) ->
+    Acc;
+qs_check(right, _, [], Acc) ->
+    Acc;
+qs_check(left, Pivot, [H|T], Acc) ->
+    if
+        H < Pivot ->
+            qs_check(left,Pivot,T,[H|Acc]);
+        true ->
+            qs_check(left,Pivot,T,Acc)
+    end;
+qs_check(right, Pivot, [H|T], Acc) ->
+    if
+        H >= Pivot ->
+            qs_check(right,Pivot,T,[H|Acc]);
+        true ->
+            qs_check(right,Pivot,T,Acc)
+    end.
 
+%mergesort
+
+merge_sort([L]) -> [L]; 
+merge_sort(L) ->
+    {L1, L2} = lists:split(length(L) div 2, L),
+    lists:merge(merge_sort(L1), merge_sort(L2)).
+
+% ex3-8
 
 

@@ -61,6 +61,3 @@ matchAux(Result, Element, [{Key, Val} | Tail]) ->
 
 
 
-%read(Key, Db)
-%match(Element, Db) 
-%destroy(DbName) -> ok.
