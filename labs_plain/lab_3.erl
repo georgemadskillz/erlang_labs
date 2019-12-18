@@ -175,7 +175,7 @@ qs_check(right, Pivot, [H|T], Acc) ->
     end.
 
 %mergesort
-
+% TOD: станешь поумнее, допили нормально без использования стандартных библиотек
 merge_sort([L]) -> [L]; 
 merge_sort(L) ->
     {L1, L2} = lists:split(length(L) div 2, L),
