@@ -2,9 +2,9 @@
 -export([new/0]).
 -export([destroy/1]).
 -export([write/3]).
-%-export([read/2]).
+-export([read/2]).
 -export([delete/2]).
-%-export([match/2]).
+-export([match/2]).
 
 %using lists module
 
@@ -24,6 +24,28 @@ delete(Key, Db) ->
     end.
 
 read(Key, Db) ->
+    case lists:keyfind(Key,1,Db) of
+        false ->
+            {error, instance};
+        {_,Val} ->
+            {ok, Val}
+    end.
+
+
+
+match(Element, Db) ->
+    matchAux([],Element,Db).
+
+matchAux(Retval,Element,Db) ->
+    case lists:keysearch(Element,2,Db) of
+        {value,{Key,_Val}} ->
+            matchAux([Key|Retval],Element,lists:keydelete(Key,1,Db));
+        false ->
+            Retval
+    end.
+
+
+
 
 %plain erlang
 
@@ -68,16 +90,12 @@ read(Key, Db) ->
 %    matchAux([],Element,Db).
 %
 %matchAux(Result, Element, [{Key, Val} | Tail]) ->
-%    io:fwrite("match AUX inpt ~p~n", [[{Key, Val} | Tail]]), 
-%    io:fwrite("match AUX rslt ~p~n", [Result]),
 %    case {Key, Val} of
 %        {Key, Element} ->
-%            io:fwrite("match MATCH rslt ~p~n", [[Key | Result]]),
 %            matchAux([Key | Result], Element, Tail);
 %        _ ->
 %            if
 %                Tail == [] ->
-%                    io:fwrite("match NULL tail~n"),
 %                    Result;
 %                true -> matchAux(Result,Element,Tail)
 %            end
