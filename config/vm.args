@@ -1,6 +1,0 @@
--sname test_app
-
--setcookie test_app_cookie
-
-+K true
-+A30
